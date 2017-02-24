@@ -51,12 +51,6 @@ GameScreen::GameScreen(sf::RenderWindow& window) :  IScreen(window, GAME)
 		this->_window.getSize().y - this->_window.getSize().y / 25.f), LEFT));
 	this->_buttons[0]->onClick(&IEvent::toggleBoundingBoxes, this->_events[1], this->_index);
 	this->_buttons[2]->onClick(&IEvent::changeScreen, this->_events[1], MENU, static_cast<IScreen *>(this));
-
-	this->_map_texture.loadFromFile(SPRITES_DIR"/Environment/map_final.png");
-	this->_map.setTexture(this->_map_texture);
-	this->_map.setScale(sf::Vector2f(
-		this->_window.getSize().x / this->_map.getGlobalBounds().width,
-		this->_window.getSize().x / this->_map.getGlobalBounds().width));
 }
 
 IScreen::~IScreen()
@@ -110,11 +104,6 @@ std::vector<Button *>&	MenuScreen::getButtons()
 std::vector<Button *>&	GameScreen::getButtons()
 {
 	return (this->_buttons);
-}
-
-const sf::Sprite&		GameScreen::getMap() const
-{
-	return (this->_map);
 }
 
 

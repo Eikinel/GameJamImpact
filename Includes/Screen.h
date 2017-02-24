@@ -59,10 +59,7 @@ public:
 
 	//GETTERS
 	virtual std::vector<Button *>&	getButtons();
-	virtual const sf::Sprite&		getMap() const;
 
 protected:
 	std::vector<Button *>	_buttons;
-	sf::Texture				_map_texture;
-	sf::Sprite				_map;
 };

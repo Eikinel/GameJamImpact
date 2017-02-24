@@ -92,6 +92,8 @@ void		GameEvent::draw(IScreen& screen)
 {
 	GameScreen*	gscreen = static_cast<GameScreen *>(&screen);
 
+	for (std::vector<Button *>::const_iterator it = gscreen->getButtons().begin(); it != gscreen->getButtons().end(); ++it)
+		gscreen->getWindow().draw((*it)->getText());
 }
 
 
