@@ -21,7 +21,7 @@ public:
 	virtual std::vector<bool>&	getToggleOptions();
 	template <typename T> void	getBoundingBoxes(const Entity<T>& e, std::vector<sf::VertexArray>& boxes)
 	{
-		const sf::Color type[5] = { sf::Color::Magenta, sf::Color::Green, sf::Color::Red, sf::Color::Blue, sf::Color::White };
+		const sf::Color type[4] = { sf::Color::Magenta, sf::Color::Green, sf::Color::Red, sf::Color::White };
 
 		for (std::vector<T *>::const_iterator it = e.getColliders().begin(); it != e.getColliders().end(); ++it)
 		{

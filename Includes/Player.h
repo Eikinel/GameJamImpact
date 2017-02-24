@@ -6,7 +6,9 @@
 class			Player : public Entity<BoxCollider>
 {
 public:
-	Player(const sf::Vector2i& pos, const sf::FloatRect& square_side, const sf::Texture& texture);
-	Player(const sf::Vector2i& pos, const sf::FloatRect& square_side, const std::string& path_to_texture);
+	Player(const sf::Vector2f& pos, const sf::ConvexShape& shape, const sf::Color color);
 	~Player() {	std::cout << "Deleting player" << std::endl; }
+
+protected:
+	//std::vector<ISkill *>	_skills;
 };

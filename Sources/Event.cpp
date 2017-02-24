@@ -93,7 +93,17 @@ void		GameEvent::draw(IScreen& screen)
 	GameScreen*	gscreen = static_cast<GameScreen *>(&screen);
 
 	for (std::vector<Button *>::const_iterator it = gscreen->getButtons().begin(); it != gscreen->getButtons().end(); ++it)
+	{
 		gscreen->getWindow().draw((*it)->getText());
+		if (this->_toggle_options[0])
+		{
+			std::vector<sf::VertexArray>	boxes;
+
+			this->getBoundingBoxes(**it, boxes);
+			for (std::vector<sf::VertexArray>::const_iterator it2 = boxes.begin(); it2 != boxes.end(); ++it2)
+				gscreen->getWindow().draw(*it2);
+		}
+	}
 }
 
 

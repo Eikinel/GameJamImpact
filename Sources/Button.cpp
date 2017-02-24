@@ -4,7 +4,7 @@
 
 //CONSTRUCTORS
 Button::Button(const std::string& text, const size_t& size, const sf::Vector2f& pos,
-	const eIndent& indent, const std::string& path_to_font, const sf::Texture& texture) : Entity(BUTTON, sf::Vector2i(pos), texture)
+	const eIndent& indent, const std::string& path_to_font, const sf::Texture& texture) : Entity(BUTTON, sf::Vector2f(pos))
 {
 	std::string	format[3] = { "LEFT", "CENTER", "RIGHT" };
 
@@ -25,7 +25,7 @@ Button::Button(const std::string& text, const size_t& size, const sf::Vector2f& 
 }
 
 Button::Button(const std::string& text, const size_t& size, const sf::Font& font,
-	const sf::Vector2f& pos, const eIndent& indent, const sf::Texture& texture) : Entity(BUTTON, sf::Vector2i(pos), texture)
+	const sf::Vector2f& pos, const eIndent& indent, const sf::Texture& texture) : Entity(BUTTON, sf::Vector2f(pos))
 {
 	std::cout << "Add button with text \"" << text << "\"." << std::endl;
 	this->_font = font;
@@ -44,13 +44,12 @@ Button::Button(const std::string& text, const size_t& size, const sf::Font& font
 	this->addCollider(new BoxCollider(box));
 }
 
-Button::Button(const Button& other) : Entity(other._type, other._pos, other._texture)
+Button::Button(const Button& other) : Entity(other._type, other._pos)
 {
 	this->_font = sf::Font(other._font);
 	this->_text = sf::Text(other._text);
 	for (std::vector<BoxCollider *>::const_iterator it = other._colliders.begin(); it != other._colliders.end(); ++it)
 		this->_colliders.push_back(new BoxCollider((*it)->getShape().getGlobalBounds()));
-	this->_sprite = sf::Sprite(other._sprite);
 	this->_event = other._event;
 }
 
