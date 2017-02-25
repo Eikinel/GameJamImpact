@@ -101,8 +101,12 @@ void		GameEvent::draw(IScreen& screen)
 
 			this->getBoundingBoxes(**it, boxes);
 			for (std::vector<sf::VertexArray>::const_iterator it2 = boxes.begin(); it2 != boxes.end(); ++it2)
-				gscreen->getWindow().draw(*it2);
+				gscreen->draw(*it2);
 		}
+	}
+	for (auto it : gscreen->getEntities())
+	{
+		gscreen->draw(it->getShape());
 	}
 }
 

@@ -28,6 +28,10 @@ public:
 	virtual std::vector<IEvent *>&	getEvents();
 	virtual eGamestate				getState() const;
 	virtual const unsigned int		getIndex() const;
+	void draw(const sf::Drawable& object)
+	{
+		this->_window.draw(object);
+	}
 
 	//METHODS
 	virtual int		run();
@@ -59,7 +63,9 @@ public:
 
 	//GETTERS
 	virtual std::vector<Button *>&	getButtons();
+	std::vector<Entity<BoxCollider> *>	getEntities();
 
 protected:
+	std::vector<Entity<BoxCollider> *> _entities;
 	std::vector<Button *>	_buttons;
 };

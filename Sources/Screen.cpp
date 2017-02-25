@@ -39,7 +39,8 @@ GameScreen::GameScreen(sf::RenderWindow& window) :  IScreen(window, GAME)
 	std::cout << std::endl << "Creating game screen" << std::endl;
 	this->_events.push_back(new WindowDefaultEvent); // Event handler for options, close window, etc.
 	this->_events.push_back(new GameEvent); // Update game, draw it and react in terms of user inputs.
-
+	this->_entities.push_back(
+		new Player(sf::Vector2f(550.f, 550.f), sf::RectangleShape(sf::Vector2f(100.f, 100.f)), sf::Color::Cyan));
 	this->_buttons.push_back(new Button("Toggle bounding boxes", this->_window.getSize().y / 25.f, sf::Vector2f(
 		this->_window.getSize().x / 9.2f,
 		this->_window.getSize().y - this->_window.getSize().y / 6.f), LEFT));
@@ -72,6 +73,8 @@ GameScreen::~GameScreen()
 	std::cout << "Deleting game screen" << std::endl;
 	for (std::vector<Button *>::const_iterator it = this->_buttons.begin(); it != this->_buttons.end(); ++it)
 		delete (*it);
+	for (auto it : this->_entities)
+		delete it;
 }
 
 
@@ -104,6 +107,11 @@ std::vector<Button *>&	MenuScreen::getButtons()
 std::vector<Button *>&	GameScreen::getButtons()
 {
 	return (this->_buttons);
+}
+
+std::vector<Entity<BoxCollider> *>	GameScreen::getEntities()
+{
+	return (this->_entities);
 }
 
 
