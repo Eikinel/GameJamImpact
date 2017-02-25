@@ -14,9 +14,11 @@ int		main()
 
 	// Pushing screens to the stack
 	all_screens.push_back(new GameScreen(window));
-
+	//START
+	all_screens.push_back(new ChoiceScreen(window));
+	//END
 	// Run every elements in the stack. If there's no more screen left or a close request is done, break the loop.
-	int status = MENU;
+	int status = 1;
 	while ((status = all_screens[status]->run()) != EXIT && status < all_screens.size());
 
 	// On exit request, delete all screens properly

@@ -54,6 +54,37 @@ GameScreen::GameScreen(sf::RenderWindow& window) :  IScreen(window, GAME)
 	this->_buttons[2]->onClick(&IEvent::changeScreen, this->_events[1], MENU, static_cast<IScreen *>(this));
 }
 
+//START
+ChoiceScreen::ChoiceScreen(sf::RenderWindow & window) : IScreen(window, eGamestate::CHOICE)
+{
+	this->_events.push_back(new WindowDefaultEvent);
+	this->_events.push_back(new ChoiceEvent);
+
+	if (!_fQuestion.loadFromFile(FONTS_DIR"/moyko.ttf"))
+		std::cout << "halp";
+	_txQuestion.setFont(_fQuestion);
+	_txQuestion.setString("What is your main character trait ?");
+	_txQuestion.setPosition(sf::Vector2f(100, 100));
+	_txQuestion.setCharacterSize(25);
+	sf::Vector2f posWindow(this->_window.getSize());
+	std::cout << std::endl << "Creating choice screen" << std::endl;
+	std::string allCara[6] = { "CLEVER", "SHY", "CHOLERIC", "SLEFISH", "GROSS", "LAZY"};
+	int posY = posWindow.y / 10.f;
+	for (int i = 0; i < idButton::count; i++)
+	{
+		this->_buttons.push_back(new Button(allCara[i], 25,
+			sf::Vector2f(posWindow.x / 2.f, posY), CENTER));
+		posY += this->_buttons[i]->getText().getGlobalBounds().height + posWindow.y / 25.f;
+	}
+	int i = 0;
+	for (auto it : _buttons)
+		it->onClick(&ChoiceEvent::setInfoPlayer,
+			dynamic_cast<ChoiceEvent*>(this->_events[1]),
+			this,
+			i++, 2);
+}
+//END
+
 IScreen::~IScreen()
 {
 	std::cout << "Deleting window events" << std::endl;
@@ -76,7 +107,14 @@ GameScreen::~GameScreen()
 	for (auto it : this->_entities)
 		delete it;
 }
-
+//START
+ChoiceScreen::~ChoiceScreen()
+{
+	std::cout << "Deleting choice screen" << std::endl;
+	for (auto it : this->_buttons)
+		delete it;
+}
+//END
 
 //GETTERS
 sf::RenderWindow&		IScreen::getWindow()
@@ -89,12 +127,12 @@ std::vector<IEvent *>&	IScreen::getEvents()
 	return (this->_events);
 }
 
-eGamestate				IScreen::getState() const
+eGamestate				IScreen::getState()
 {
 	return (this->_state);
 }
 
-const unsigned int		IScreen::getIndex() const
+const unsigned int		IScreen::getIndex()
 {
 	return (this->_index);
 }
@@ -113,6 +151,18 @@ std::vector<Entity<BoxCollider> *>	GameScreen::getEntities()
 {
 	return (this->_entities);
 }
+
+//START
+const std::vector<Button *>& ChoiceScreen::getButtons() const
+{
+	return (this->_buttons);
+}
+
+const sf::Text &ChoiceScreen::getQuestion() const
+{
+	return _txQuestion;
+}
+//END
 
 
 //METHODS

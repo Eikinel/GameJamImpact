@@ -5,6 +5,7 @@
 # include <functional>
 
 class	IEvent;
+class	ChoiceScreen;
 class	BoxCollider;
 enum	eGamestate;
 
@@ -41,6 +42,10 @@ public:
 	template <typename U, typename... T> void onClick(int (U::*func)(eGamestate, T...), U* event, eGamestate gamestate, T... params)
 	{
 		this->_event = std::bind(func, event, gamestate, params...);
+	}
+	template <typename U, typename... T> void onClick(int (U::*func)(ChoiceScreen *, T...), U* event, ChoiceScreen* screen, T... params)
+	{
+		this->_event = std::bind(func, event, screen, params...);
 	}
 
 	int triggerEvent();

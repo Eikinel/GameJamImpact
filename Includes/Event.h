@@ -5,7 +5,9 @@
 # include "Button.h"
 # include <iostream>
 
+
 class IScreen;
+class ChoiceScreen;
 
 class				IEvent
 {
@@ -77,4 +79,17 @@ public:
 
 	virtual int		update(IScreen& screen, sf::Event& event);
 	virtual void	draw(IScreen& screen);
+};
+
+class				ChoiceEvent : public IEvent
+{
+public:
+	ChoiceEvent();
+
+	virtual int		update(IScreen& screen, sf::Event& event);
+	virtual void	draw(IScreen& screen);
+	virtual int		setInfoPlayer(ChoiceScreen *screen, int idCara, int add);
+
+private:
+	std::vector<int> _infoPlayer;
 };

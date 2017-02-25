@@ -14,7 +14,8 @@ enum				eGamestate
 	EXIT = -1,
 	MENU,
 	OPTIONS,
-	GAME
+	GAME,
+	CHOICE
 };
 
 class				IScreen
@@ -26,8 +27,8 @@ public:
 	//GETTERS
 	virtual sf::RenderWindow&		getWindow();
 	virtual std::vector<IEvent *>&	getEvents();
-	virtual eGamestate				getState() const;
-	virtual const unsigned int		getIndex() const;
+	virtual eGamestate				getState();
+	virtual const unsigned int		getIndex();
 	void draw(const sf::Drawable& object)
 	{
 		this->_window.draw(object);
@@ -68,4 +69,30 @@ public:
 protected:
 	std::vector<Entity<BoxCollider> *> _entities;
 	std::vector<Button *>	_buttons;
+};
+
+class ChoiceScreen : public IScreen
+{
+public:
+	ChoiceScreen(sf::RenderWindow& window);
+	virtual ~ChoiceScreen();
+
+	enum idButton
+	{
+		CLEVER,
+		SHY,
+		CHOLERIC,
+		SELFISH,
+		GROSS,
+		LAZY,
+		count
+	};
+	//GETTERS
+	const std::vector<Button *>&	getButtons() const;
+	const sf::Text&				getQuestion() const;
+private:
+	std::vector<Button *> _buttons;
+	std::vector<int> _infoPlayer;
+	sf::Font		_fQuestion;
+	sf::Text		_txQuestion;
 };
