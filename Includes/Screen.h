@@ -102,10 +102,16 @@ public:
 	virtual const std::vector<Button *>&				getButtons() const;
 	virtual const std::vector<Entity<BoxCollider> *>&	getEntities() const;
 	virtual const std::vector<std::string>&				getMap() const;
+	virtual const std::vector<sf::Rect<float> * >&		getBlock() const;
+	virtual const int&									getValueField(const int & code) const;
 
+	//SETTERS
+	virtual void										setBitField(const int &code, const bool &value);
 protected:
 	std::vector<Entity<BoxCollider> *>	_entities;
 	std::vector<Button *>				_buttons;
 	std::vector<std::string>			_map;
+	std::vector<sf::Rect<float> *>		_block;
+	bool								_bitField[sf::Keyboard::Key::KeyCount] = { false };
 };
 

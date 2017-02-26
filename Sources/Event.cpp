@@ -174,33 +174,21 @@ void ChoiceEvent::draw(IScreen & screen)
 int		BoardEvent::update(IScreen& screen, sf::Event& event)
 {
 	BoardScreen*	gscreen = static_cast<BoardScreen *>(&screen);
+	std::vector<std::string>	tmpMap = gscreen->getMap();
 
 	switch (event.type)
 	{
 	case sf::Event::KeyPressed:
 		std::cout << "BoardEvent : Key pressed !" << std::endl;
-		switch (event.key.code)
-		{
-		case sf::Keyboard::Z:
-			gscreen->getEntities()[0]->moveOnMap(sf::Vector2f(0.f, -0.1f));
-			break;
-		case sf::Keyboard::Q:
-			gscreen->getEntities()[0]->moveOnMap(sf::Vector2f(-0.1f, 0.f));
-			break;
-		case sf::Keyboard::S:
-			gscreen->getEntities()[0]->moveOnMap(sf::Vector2f(0.f, 0.1f));
-			break;
-		case sf::Keyboard::D:
-			gscreen->getEntities()[0]->moveOnMap(sf::Vector2f(0.1f, 0.f));
-			break;
-		default:
-			break;
-		}
+		gscreen->setBitField(event.key.code, true);
+		break;
+	case sf::Event::KeyReleased:
+		gscreen->setBitField(event.key.code, false);
+		break;
 	case sf::Event::MouseMoved:
 		break;
 	case sf::Event::MouseButtonReleased:
 		std::cout << "BoardEvent : Click !" << std::endl;
-		
 		for (auto it : gscreen->getButtons())
 		{
 			int status = gscreen->getIndex();
@@ -213,7 +201,31 @@ int		BoardEvent::update(IScreen& screen, sf::Event& event)
 	default:
 		break;
 	}
-
+	sf::Vector2f	force(sf::Vector2f(0.f, 0.f));
+	if (gscreen->getValueField(sf::Keyboard::Z))
+		force.y -= 15 * FPS;
+	if (gscreen->getValueField(sf::Keyboard::Q))
+		force.x -= 15 * FPS;
+	if (gscreen->getValueField(sf::Keyboard::S))
+		force.y += 15 * FPS;	
+	if (gscreen->getValueField(sf::Keyboard::D))
+		force.x += 15 * FPS;
+	sf::Rect<float>	tmpRect(gscreen->getEntities()[0]->getShape().getGlobalBounds());
+	sf::Vector2f tmpForce(force);
+	for (auto it : gscreen->getBlock())
+	{
+		if (force == sf::Vector2f(0.f, 0.f))
+			break;
+		tmpRect.left += tmpForce.x;
+		if (it->intersects(tmpRect))
+			force.x = 0;
+		tmpRect.left -= tmpForce.x;
+		tmpRect.top += tmpForce.y;
+		if (it->intersects(tmpRect))
+			force.y = 0;
+		tmpRect.top -= tmpForce.y;
+	}
+	gscreen->getEntities()[0]->moveOnMap(force);
 	return (screen.getIndex());
 }
 

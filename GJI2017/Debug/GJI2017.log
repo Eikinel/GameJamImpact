@@ -1,6 +1,11 @@
-﻿  Main.cpp
-h:\documents\projets\gamejamimpact\includes\collider.h(61): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
-h:\documents\projets\gamejamimpact\sources\main.cpp(10): warning C4244: 'argument' : conversion de 'float' en 'unsigned int', perte possible de données
-h:\documents\projets\gamejamimpact\sources\main.cpp(20): warning C4018: '<' : incompatibilité signed/unsigned
-  GJI2017.vcxproj -> H:\Documents\Projets\GameJamImpact\Debug\GJI2017.exe
-  GJI2017.vcxproj -> H:\Documents\Projets\GameJamImpact\Debug\GJI2017.pdb (Full PDB)
+﻿  Event.cpp
+c:\users\arnau\desktop\game dev\gamejamimpact\includes\collider.h(61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\arnau\desktop\game dev\gamejamimpact\sources\event.cpp(75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\arnau\desktop\game dev\gamejamimpact\sources\event.cpp(117): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\arnau\desktop\game dev\gamejamimpact\sources\event.cpp(140): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\arnau\desktop\game dev\gamejamimpact\sources\event.cpp(197): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\arnau\desktop\game dev\gamejamimpact\sources\event.cpp(237): warning C4244: '/=': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\arnau\desktop\game dev\gamejamimpact\sources\event.cpp(238): warning C4244: '/=': conversion from 'float' to 'sf::Uint8', possible loss of data
+c:\users\arnau\desktop\game dev\gamejamimpact\sources\event.cpp(239): warning C4244: '/=': conversion from 'float' to 'sf::Uint8', possible loss of data
+  GJI2017.vcxproj -> C:\Users\arnau\Desktop\Game dev\GameJamImpact\Debug\GJI2017.exe
+  GJI2017.vcxproj -> C:\Users\arnau\Desktop\Game dev\GameJamImpact\Debug\GJI2017.pdb (Full PDB)

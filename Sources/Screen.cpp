@@ -9,7 +9,7 @@
 IScreen::IScreen(sf::RenderWindow& window, eGamestate state) : _window(window), _state(state)
 {
 	this->_index = all_screens.size();
-	this->_window.setFramerateLimit(120);
+	this->_window.setFramerateLimit(FPS);
 }
 
 MenuScreen::MenuScreen(sf::RenderWindow& window) : IScreen(window, MENU)
@@ -125,15 +125,18 @@ BoardScreen::BoardScreen(sf::RenderWindow& window, const eGamestate& gamestate) 
 
 	for (unsigned int y = 0; y < this->_map.size(); y++)
 		for (unsigned int x = 0; x < this->_map[y].size(); x++)
-			if (this->_map[y][x] == '2')
+		{
+			if (this->_map[y][x] == '1')
+				this->_block.push_back(new sf::Rect<float>(x * shape.getGlobalBounds().width, y * shape.getGlobalBounds().height,
+					shape.getGlobalBounds().width, shape.getGlobalBounds().height));
+			else if (this->_map[y][x] == '2')
 			{
 				this->_entities[0]->setPositionOnMap(sf::Vector2f(x, y));
 				shape.setPosition(sf::Vector2f(
 					x * shape.getGlobalBounds().width,
 					y * shape.getGlobalBounds().height));
-				break;
 			}
-
+		}
 	shape.setFillColor(sf::Color::White); //Player's color changed after quiz
 	player->setShape(shape);
 
@@ -166,6 +169,8 @@ BoardScreen::~BoardScreen()
 	for (auto it : this->_buttons)
 		delete (it);
 	for (auto it : this->_entities)
+		delete it;
+	for (auto it : this->_block)
 		delete it;
 }
 
@@ -219,6 +224,22 @@ const std::vector<Entity<BoxCollider> *>&	BoardScreen::getEntities() const
 const std::vector<std::string>&				BoardScreen::getMap() const
 {
 	return (this->_map);
+}
+
+const std::vector<sf::Rect<float> *>&		BoardScreen::getBlock() const
+{
+	return (this->_block);
+}
+
+const int&									BoardScreen::getValueField(const int & code) const
+{
+	return (this->_bitField[code]);
+}
+
+//SETTERS
+void BoardScreen::setBitField(const int & code, const bool & value)
+{
+	this->_bitField[code] = value;
 }
 
 //METHODS

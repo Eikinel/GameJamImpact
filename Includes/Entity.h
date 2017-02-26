@@ -85,7 +85,6 @@ public:
 			this->_pos.y * this->_shape.getGlobalBounds().height));
 	}
 
-
 	//METHODS
 	virtual void	addCollider(T * collider)
 	{
