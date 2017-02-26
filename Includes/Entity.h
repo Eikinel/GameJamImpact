@@ -24,14 +24,12 @@ public:
 		this->_shape = shape;
 		this->_shape.setFillColor(color);
 		this->_shape.setPosition(pos);
-		this->_pos = pos;
 	}
 
 	Entity(const Entity& other)
 	{
 		this->_type = other._type;
 		this->_shape = other._shape;
-		this->_pos = other._pos;
 	}
 
 	virtual ~Entity()
@@ -44,7 +42,7 @@ public:
 	}
 
 	//GETTERS
-	virtual const sf::Shape&		getShape() const
+	virtual const sf::RectangleShape&		getShape() const
 	{
 		return (this->_shape);
 	}
@@ -57,6 +55,34 @@ public:
 	virtual const std::vector<T*>&	getColliders() const
 	{
 		return (this->_colliders);
+	}
+
+	virtual const sf::Vector2f&		getPositionOnMap() const
+	{
+		return (this->_pos);
+	}
+
+
+	//SETTERS
+	virtual void	setShape(const sf::RectangleShape& shape)
+	{
+		this->_shape = shape;
+	}
+
+	virtual void	setPositionOnMap(const sf::Vector2f& pos)
+	{
+		this->_pos = pos;
+		this->_shape.setPosition(sf::Vector2f(
+			this->_pos.x * this->_shape.getGlobalBounds().width,
+			this->_pos.y * this->_shape.getGlobalBounds().height));
+	}
+
+	virtual void	moveOnMap(const sf::Vector2f& offset)
+	{
+		this->_pos += offset;
+		this->_shape.setPosition(sf::Vector2f(
+			this->_pos.x * this->_shape.getGlobalBounds().width,
+			this->_pos.y * this->_shape.getGlobalBounds().height));
 	}
 
 

@@ -5,6 +5,7 @@
 # include <functional>
 
 class	IEvent;
+class	ChoiceScreen;
 class	BoxCollider;
 enum	eGamestate;
 
@@ -27,10 +28,11 @@ public:
 	virtual ~Button();
 
 	//GETTERS
-	virtual sf::Text&					getText();
+	virtual const sf::Text&				getText() const;
 	virtual const std::function<int()>&	getEvent() const;
 
 	//SETTERS
+	void	setText(const sf::Text& text);
 	void	setEvent(const std::function<int()> event);
 
 	//METHODS
@@ -41,6 +43,10 @@ public:
 	template <typename U, typename... T> void onClick(int (U::*func)(eGamestate, T...), U* event, eGamestate gamestate, T... params)
 	{
 		this->_event = std::bind(func, event, gamestate, params...);
+	}
+	template <typename U, typename... T> void onClick(int (U::*func)(ChoiceScreen *, T...), U* event, ChoiceScreen* screen, T... params)
+	{
+		this->_event = std::bind(func, event, screen, params...);
 	}
 
 	int triggerEvent();

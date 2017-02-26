@@ -6,6 +6,7 @@
 # include <iostream>
 
 class IScreen;
+class BoardScreen;
 
 class				IEvent
 {
@@ -70,11 +71,32 @@ public:
 	virtual void	draw(IScreen& screen);
 };
 
-class				GameEvent : public IEvent
+class				ChoiceEvent : public IEvent
 {
 public:
-	GameEvent();
+	ChoiceEvent();
 
 	virtual int		update(IScreen& screen, sf::Event& event);
 	virtual void	draw(IScreen& screen);
+
+	//GETTERS
+	virtual const std::vector<bool>&	getInfosPlayer() const;
+
+	//SETTERS
+	virtual int		setInfoPlayer(ChoiceScreen *screen, int idCara);
+
+protected:
+	std::vector<bool> _infoPlayer;
+};
+
+class				BoardEvent : public IEvent
+{
+public:
+	BoardEvent();
+
+	virtual int		update(IScreen& screen, sf::Event& event);
+	virtual void	draw(IScreen& screen);
+
+	//METHODS
+	virtual void	setInfosPlayer(const std::vector<bool>& infos, BoardScreen* bscreen);
 };

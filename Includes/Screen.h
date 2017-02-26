@@ -14,7 +14,16 @@ enum				eGamestate
 	EXIT = -1,
 	MENU,
 	OPTIONS,
-	GAME
+	CHOICE,
+	BOARD_BEGIN,
+	BOARD_ONE,
+	BOARD_TWO,
+	BOARD_THREE,
+	BOARD_FOUR,
+	BOARD_FIVE,
+	BOARD_SIX,
+	BOARD_SEVEN,
+	BOARD_END
 };
 
 class				IScreen
@@ -24,10 +33,10 @@ public:
 	virtual ~IScreen();
 
 	//GETTERS
-	virtual sf::RenderWindow&		getWindow();
-	virtual std::vector<IEvent *>&	getEvents();
-	virtual eGamestate				getState() const;
-	virtual const unsigned int		getIndex() const;
+	virtual sf::RenderWindow&				getWindow();
+	virtual const std::vector<IEvent *>&	getEvents() const;
+	virtual const eGamestate				getState() const;
+	virtual const unsigned int				getIndex() const;
 	void draw(const sf::Drawable& object)
 	{
 		this->_window.draw(object);
@@ -49,23 +58,54 @@ public:
 	MenuScreen(sf::RenderWindow& window);
 	virtual ~MenuScreen();
 
-	virtual std::vector<Button *>&	getButtons();
+	virtual const std::vector<Button *>&	getButtons() const;
 
 protected:
 	std::vector<Button *>	_buttons;
 };
 
-class				GameScreen : public IScreen
+class ChoiceScreen : public IScreen
 {
 public:
-	GameScreen(sf::RenderWindow& window);
-	virtual ~GameScreen();
+	ChoiceScreen(sf::RenderWindow& window);
+	virtual ~ChoiceScreen();
+
+	enum idButton
+	{
+		CLEVER,
+		SHY,
+		CHOLERIC,
+		SELFISH,
+		GROSS,
+		LAZY,
+		count
+	};
 
 	//GETTERS
-	virtual std::vector<Button *>&	getButtons();
-	std::vector<Entity<BoxCollider> *>	getEntities();
+	const std::vector<Button *>&	getButtons() const;
+	const sf::Text&					getQuestion() const;
+
+private:
+	std::vector<Button *>	_buttons;
+	std::vector<int>		_infoPlayer;
+	sf::Font				_fQuestion;
+	sf::Text				_txQuestion;
+};
+
+class				BoardScreen : public IScreen
+{
+public:
+	BoardScreen(sf::RenderWindow& window, const eGamestate& gamestate);
+	virtual ~BoardScreen();
+
+	//GETTERS
+	virtual const std::vector<Button *>&				getButtons() const;
+	virtual const std::vector<Entity<BoxCollider> *>&	getEntities() const;
+	virtual const std::vector<std::string>&				getMap() const;
 
 protected:
-	std::vector<Entity<BoxCollider> *> _entities;
-	std::vector<Button *>	_buttons;
+	std::vector<Entity<BoxCollider> *>	_entities;
+	std::vector<Button *>				_buttons;
+	std::vector<std::string>			_map;
 };
+

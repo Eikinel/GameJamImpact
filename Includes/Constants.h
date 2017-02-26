@@ -6,8 +6,8 @@
 
 // Directories
 # define ASSETS_DIR		"../Assets"
-# define SPRITES_DIR	ASSETS_DIR"/Sprites"
 # define FONTS_DIR		ASSETS_DIR"/Fonts"
+# define MAPS_DIR		ASSETS_DIR"/Maps"
 
 // Global variable for screens, containing menu, game, etc.
 class IScreen;
